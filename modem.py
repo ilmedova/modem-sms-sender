@@ -14,7 +14,6 @@ def establish_modem_connection():
         modem.waitForNetworkCoverage(10)
         return modem
     except GsmModemException as e:
-        print(f"Failed to establish modem connection: {e}")
         return None
     
 async def send_to_api_endpoint(phone,message):
@@ -26,11 +25,6 @@ async def send_to_api_endpoint(phone,message):
         "message": message
     }
     response = requests.get("http://localhost:8000/api/sms/sms-update", data, headers=headers)
-    
-    if response.status_code == 200:
-        print(f"Data sent to API endpoint: {data}")
-    else:
-        print(f"Failed to send data to API endpoint. Status code: {response.status_code}")
 
 
 async def websocket_client():
@@ -41,7 +35,6 @@ async def websocket_client():
                 "channel": "verifications"
             }
         }))
-        print('Initializing modem...')
         modem = establish_modem_connection()
         while True:
             message = await websocket.recv()
@@ -54,15 +47,11 @@ async def websocket_client():
                     response = modem.sendSms(data.get("phone"), data.get("message"), False)
                     if type(response) == SentSms:
                         await send_to_api_endpoint(data.get("phone"), data.get("message"))
-                        print('SMS Delivered')
-                    else:
-                        print('SMS Could not be sent')
                 except GsmModemException as e:
-                    print('ERROR')
-        modem.close()
+                    modem.close()
 
 def main():
-	asyncio.get_event_loop().run_until_complete(websocket_client())
+    asyncio.get_event_loop().run_until_complete(websocket_client())
 
 if __name__ == "__main__":
     main()
