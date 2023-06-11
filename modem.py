@@ -9,23 +9,26 @@ from gsmmodem.exceptions import GsmModemException
 
 def establish_modem_connection():
     try:
-        modem = GsmModem("/dev/ttyUSB0", 115200, 30)
+        modem = GsmModem("/dev/ttyUSB0", 115200)
         modem.connect()
         modem.waitForNetworkCoverage(10)
+        print("Connection with modem established")
         return modem
     except GsmModemException as e:
+        print("Couldn't connect")
         return None
-    
-async def send_to_api_endpoint(phone,message):
+
+async def send_to_api_endpoint(phone, message, status):
     headers = {
         "Content-Type": "application/json"
     }
     data = {
         "phone": phone,
-        "message": message
+        "message": message,
+        "status": status
     }
-    response = requests.get("http://localhost:8000/api/sms/sms-update", data, headers=headers)
-
+    response = requests.post("http://localhost:8000/api/sms/sms-update", json=data, headers=headers)
+    response.raise_for_status()
 
 async def websocket_client():
     async with websockets.connect("ws://localhost:6001/app/websocketkey?protocol=7&client=js&version=4.3.1&flash=false") as websocket:
@@ -40,18 +43,20 @@ async def websocket_client():
             message = await websocket.recv()
             data = json.loads(message)
             if "data" in data:
-	            data = json.loads(data['data'])
+                data = json.loads(data['data'])
             print(data)
             if data.get("phone") is not None:
                 try:
-                    response = modem.sendSms(data.get("phone"), data.get("message"), False)
-                    if type(response) == SentSms:
-                        await send_to_api_endpoint(data.get("phone"), data.get("message"))
+                    response = modem.sendSms(data.get("phone"), data.get("message"))
+                    if isinstance(response, SentSms):
+                        await send_to_api_endpoint(data.get("phone"), data.get("message"), True)
+                    else:
+                        await send_to_api_endpoint(data.get("phone"), data.get("message"), False)
                 except GsmModemException as e:
                     modem.close()
 
 def main():
-    asyncio.get_event_loop().run_until_complete(websocket_client())
+    asyncio.run(websocket_client())
 
 if __name__ == "__main__":
     main()

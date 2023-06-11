@@ -88,3 +88,23 @@ To stop the script, use the following command:
 sudo supervisorctl stop your_script
 ```
 Supervisor will automatically start your script on system boot and handle process management, ensuring that it keeps running even if it crashes or encounters errors.
+
+
+#Running on ubuntu for test
+
+Create and activate a virtual environment:
+
+```
+python3 -m venv myenv         # Create a virtual environment
+source myenv/bin/activate    # Activate the virtual environment
+```
+Install the required packages from the requirements.txt file:
+
+```
+pip install -r requirements.txt
+```
+Once the virtual environment is activated and the dependencies are installed, you can run your code:
+
+```
+python modem.py
+```
