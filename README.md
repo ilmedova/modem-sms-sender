@@ -1,41 +1,4 @@
-# Encrypt the code
-
-expire after 30 days:
-```
-pyarmor gen -O dist4 -e 30 modem.py
-```
-
-expire date is 2020-12-31:
-```
-pyarmor gen -O dist4 -e 2020-12-31 modem.py
-```
-
-
-# Windows configs
-
-In Windows, you can use the "Task Scheduler" feature to run your Python script as a background service. Here's a step-by-step guide on how to set it up:
-
-Open the Task Scheduler by pressing "Win + R" to open the Run dialog, then type taskschd.msc and press Enter.
-
-In the Task Scheduler, click on "Create Basic Task" or "Create Task" in the Actions pane on the right.
-
-Follow the wizard to configure the task:
-
-Give it a name and an optional description.
-Choose "Run whether the user is logged on or not" and check the box for "Run with highest privileges" if required.
-Select "Start a program" as the action.
-In the Program/script field, provide the path to the Python interpreter (e.g., C:\Python39\python.exe).
-In the "Add arguments" field, specify the path to your Python script (e.g., C:\path\to\your\script.py).
-Configure any other settings as needed (e.g., triggers, schedules).
-
-Click "Finish" to create the task.
-
-The task will now be scheduled to run in the background according to the specified settings. You can further manage and modify the task using the Task Scheduler.
-
-Note: Ensure that you have the correct Python interpreter installed on your Windows system and that the required modules are available for your script to run successfully.
-
-
-# Ubuntu configs
+# Configure to run on Ubuntu
 
 Yes, running your script with a process manager like Supervisor is a recommended approach for running it as a background service. Supervisor provides features such as process control, automatic restarts, and managing script execution on system boot.
 
@@ -90,7 +53,7 @@ sudo supervisorctl stop your_script
 Supervisor will automatically start your script on system boot and handle process management, ensuring that it keeps running even if it crashes or encounters errors.
 
 
-#Running on ubuntu for test
+# Running on Ubuntu for testing on your local machine
 
 Create and activate a virtual environment:
 
