@@ -7,8 +7,8 @@ import requests
 from gsmmodem.modem import GsmModem, SentSms
 from gsmmodem.exceptions import GsmModemException
 
-WEBSOCKET_URL = "ws://216.250.8.91:6001/app/websocketkey?protocol=7&client=js&version=4.3.1&flash=false"
-API_ENDPOINT = "http://216.250.8.91:8000/api/sms/sms-update"
+#replace with your websocket server url and port
+WEBSOCKET_URL = "ws://WEBSOCKET_URL:WEBSOCKET_PORT/app/websocketkey?protocol=7&client=js&version=4.3.1&flash=false"
 
 def establish_modem_connection():
     try:
@@ -53,10 +53,6 @@ async def websocket_client():
                     if data.get("phone") is not None:
                         try:
                             response = modem.sendSms(data.get("phone"), data.get("message"))
-                            if isinstance(response, SentSms):
-                                await send_to_api_endpoint(data.get("phone"), data.get("message"), True)
-                            else:
-                                await send_to_api_endpoint(data.get("phone"), data.get("message"), False)
                         except GsmModemException as e:
                             modem.close()
         except (websockets.exceptions.ConnectionClosed, ConnectionRefusedError):
