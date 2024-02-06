@@ -10,6 +10,10 @@ from gsmmodem.exceptions import GsmModemException
 #replace with your websocket server url and port
 WEBSOCKET_URL = "ws://WEBSOCKET_URL:WEBSOCKET_PORT/app/websocketkey?protocol=7&client=js&version=4.3.1&flash=false"
 
+#you need to subscribe to one of the websocket channels that you already have on your backend, replace the channel name with the channel name you have
+CHANNEL_NAME = "your_channel_name_for_subscribing"
+
+#everytime the event is triggered, your websocket should send the event data in this format: {"phone": "1234567890","message": "Hello, this is a test message!"}
 def establish_modem_connection():
     try:
         modem = GsmModem("/dev/ttyUSB0", 115200)
@@ -28,7 +32,7 @@ async def websocket_client():
                 await websocket.send(json.dumps({
                     "event": "pusher:subscribe",
                     "data": {
-                        "channel": "verifications"
+                        "channel": CHANNEL_NAME
                     }
                 }))
                 modem = establish_modem_connection()
