@@ -21,18 +21,6 @@ def establish_modem_connection():
         print("Couldn't connect")
         return None
 
-async def send_to_api_endpoint(phone, message, status):
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = {
-        "phone": phone,
-        "message": message,
-        "status": status
-    }
-    response = requests.post(API_ENDPOINT, json=data, headers=headers)
-    response.raise_for_status()
-
 async def websocket_client():
     while True:
         try:
