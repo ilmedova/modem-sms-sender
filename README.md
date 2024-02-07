@@ -1,3 +1,7 @@
+# Support
+Your support is highly appreaciated, please star the repo! If you've found this library helpful and want to support the author, please, consider any donation by clicking the button below or following the link to [buymeacoffee.com](https://www.buymeacoffee.com/ilmedova). 
+
+<a href="https://www.buymeacoffee.com/ilmedova" target="_blank"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="55px" width= "200px"></a>
 # Configure to run on Ubuntu
 
 Yes, running your script with a process manager like Supervisor is a recommended approach for running it as a background service. Supervisor provides features such as process control, automatic restarts, and managing script execution on system boot.
