@@ -1,9 +1,4 @@
-# Support
-Your support is highly appreaciated, please star the repo! If you've found this library helpful and want to support the author, please, consider any donation by clicking the button below or following the link to [buymeacoffee.com](https://www.buymeacoffee.com/ilmedova). 
-
-<a href="https://www.buymeacoffee.com/ilmedova" target="_blank"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="55px" width= "200px"></a>
-
-# Usage
+# 🚀 Usage
 1. Change modem.py file so that the script will listen to your websocket channel
 2. You need to trigger events for your channel so that modem.py script catches the event and sends to the phone the message in the data that is being passed in the event
 3. To test it locally you can run command: python modem.py, but first you need to install the required libraries by typing: pip install ./requirements.txt
@@ -81,3 +76,6 @@ Once the virtual environment is activated and the dependencies are installed, yo
 ```
 python modem.py
 ```
+
+# Support
+Your support ❤️ is highly appreaciated, please star 🌟 the repo if you like the project.
